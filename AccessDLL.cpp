@@ -28,7 +28,6 @@ string getCurrentApplication() {
     tid = GetWindowThreadProcessId (win, &process);
 
     pid = OpenProcess (PROCESS_ALL_ACCESS, FALSE, process);
-//    cout << process << endl;
     // Next, we need to associate that PID with the .exe that
     // spawned it.
     GetModuleFileNameEx (pid, NULL, text, MAX_PATH);
@@ -75,17 +74,12 @@ string getKey (HKEY__* code, const char * subkey, const char * entry, const char
         dwType = REG_DWORD;
     }
 
-//    cout << subkey << "/" << entry << endl;
-
     strcpy (aKey, subkey);
     strcpy (aValue, entry);
 
     dwType = RegOpenKeyEx (code, aKey, 0, KEY_ALL_ACCESS, &hKey);
 
-//    cout << "Error: " << dwType << endl;
-    
     if (dwType == ERROR_SUCCESS) {
-//        cout << "Opened Key" << endl;
         if (strcmp (type, "REG_SZ") == 0) {
             RegQueryValueEx (hKey, entry, 0, &dwType, (LPBYTE)buf2, &dwBufSize);
             str << buf2;
@@ -98,8 +92,6 @@ string getKey (HKEY__* code, const char * subkey, const char * entry, const char
             RegQueryValueEx (hKey, entry, 0, &dwType, (LPBYTE)buf, &dwBufSize);
             str << "0x" << buf[0];
         }
-
-//        cout << "Read: " << str << "End  " << endl;
 
         RegCloseKey(hKey);
         return str.str();
@@ -224,9 +216,6 @@ JNIEXPORT void JNICALL Java_accessframework_WindowsXpContext_refreshFilterKeys
     else {
         cout << "Success in getting" << endl;
     }
-    
-//    cout << "Before Wait: " << fk2.iWaitMSec << endl;
-//    cout << "Before Repeat: " << fk2.iRepeatMSec << endl;
     
     fk.dwFlags = fk2.dwFlags;
     
